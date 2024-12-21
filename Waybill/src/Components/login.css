@@ -1,0 +1,21 @@
+@media (max-width: 768px)  {
+    .main{
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: space-evenly;
+      
+
+    }
+    .left {
+      outline: none;
+      border: none;
+      width: auto;
+   
+        
+    }
+    .right{
+      padding: 15% 0;
+    }
+}
+
