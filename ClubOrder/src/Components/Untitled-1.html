@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Searchable Selectable State Dropdown</title>
+  <style>
+    .dropdown-container {
+      width: 300px;
+      margin: 20px;
+    }
+    .dropdown {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .search-input {
+      padding: 8px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .state-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      display: none; /* Initially hidden */
+    }
+    .state-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .state-item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dropdown-container">
+    <input class="search-input" type="text" id="searchState" placeholder="Search for a state..." 
+      oninput="filterStates()" onfocus="toggleDropdown(true)" onblur="toggleDropdown(false)">
+    <div class="state-list" id="stateList"></div>
+  </div>
+
+  <script>
+    // Example state data with corresponding IDs
+    const states = [
+      { id: 1, name: 'Andhra Pradesh' },
+      { id: 2, name: 'Bihar' },
+      { id: 3, name: 'Chhattisgarh' },
+      { id: 4, name: 'Goa' },
+      { id: 5, name: 'Gujarat' },
+      { id: 6, name: 'Haryana' },
+      { id: 7, name: 'Himachal Pradesh' },
+      { id: 8, name: 'Karnataka' },
+      { id: 9, name: 'Kerala' },
+      { id: 10, name: 'Madhya Pradesh' }
+    ];
+
+    // Initialize the state list
+    let filteredStates = [...states];  // Make a copy for filtering
+    const stateListElement = document.getElementById('stateList');
+    const searchStateInput = document.getElementById('searchState');
+
+    // Render states
+    function renderStates(states) {
+      stateListElement.innerHTML = '';
+      states.forEach(state => {
+        const div = document.createElement('div');
+        div.classList.add('state-item');
+        div.textContent = state.name;
+        div.onclick = () => selectState(state);
+        stateListElement.appendChild(div);
+      });
+    }
+
+    // Filter states based on input search
+    function filterStates() {
+      const searchValue = searchStateInput.value.toLowerCase();
+      filteredStates = states.filter(state =>
+        state.name.toLowerCase().includes(searchValue)
+      );
+      renderStates(filteredStates);
+      toggleDropdown(true);  // Show dropdown while typing
+    }
+
+    // Select state handler
+    function selectState(state) {
+      // You can replace this with any handler to use the selected state's ID
+      alert(`State selected: ${state.name}, ID: ${state.id}`);
+      searchStateInput.value = state.name;  // Optionally, update input field
+      toggleDropdown(false);  // Close dropdown after selection
+    }
+
+    // Toggle the dropdown visibility based on focus
+    function toggleDropdown(isVisible) {
+      if (isVisible && searchStateInput.value) {
+        stateListElement.style.display = 'block';
+      } else {
+        stateListElement.style.display = 'none';
+      }
+    }
+
+    // Initial render of all states
+    renderStates(filteredStates);
+  </script>
+
+</body>
+</html>
