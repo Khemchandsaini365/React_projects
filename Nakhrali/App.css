@@ -1,0 +1,17 @@
+/* Zoom effect on hover */
+.zoom-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .zoom-image {
+    transition: transform 1s ease-in-out;
+  }
+  
+  .zoom-container:hover .zoom-image {
+    transform: scale(1.1); /* Zoom in effect */
+  }
+  
+.bgnone{
+  background-color: aliceblue;
+}

@@ -1,0 +1,39 @@
+/* Basic Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.menu {
+    position: relative;
+    display: inline-block;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.main-item {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.main-item:hover {
+    color: #edd8c0
+    ; /* Change the color of the main text on hover */
+}
+a{
+    font-size: 14px;
+}
+@keyframes drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

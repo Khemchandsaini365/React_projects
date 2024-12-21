@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+   
+
+  </style>
+  
+  <div class="product-carousel-container">
+    <div class="carousel-btn prev-btn">&#10094;</div>
+    <div class="product-carousel">
+      <div class="product" >
+        <div class="product-image">
+          <div >
+
+            <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 1">
+          </div>
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 1</h3>
+          <p class="product-price">$199.99</p>
+          <div class="product-rating">⭐⭐⭐⭐☆</div>
+        </div>
+      </div>
+  
+      <!-- Repeat the same structure for more products (8+ products) -->
+      <div class="product">
+        <div class="product-image">
+          <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 2">
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 2</h3>
+          <p class="product-price">$99.99</p>
+          <div class="product-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+  
+      <!-- Add more products as necessary... -->
+      <div class="product">
+        <div class="product-image">
+          <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 3">
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 3</h3>
+          <p class="product-price">$149.99</p>
+          <div class="product-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+  
+      <div class="product">
+        <div class="product-image">
+          <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 2">
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 2</h3>
+          <p class="product-price">$99.99</p>
+          <div class="product-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-image">
+          <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 2">
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 2</h3>
+          <p class="product-price">$99.99</p>
+          <div class="product-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div><div class="product">
+        <div class="product-image">
+          <img src="https://cdn.shopaccino.com/nakhrali/products/228-943728_l.png?v=509" alt="Product 2">
+          <div class="product-overlay">
+            <button class="eye-btn">👁️</button>
+            <button class="like-btn">❤️</button>
+          </div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">Product Name 2</h3>
+          <p class="product-price">$99.99</p>
+          <div class="product-rating">⭐⭐⭐⭐⭐</div>
+        </div>
+      </div>
+      <!-- Continue repeating product blocks to create more products -->
+    </div>
+    <div class="carousel-btn next-btn">&#10095;</div>
+  </div>
+  
+
+
+  <script>document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.product-carousel');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    
+    let currentIndex = 0;  // The current slide index
+    let itemsPerSlide = getItemsPerSlide();  // Number of items per slide (based on screen size)
+    let totalProducts = document.querySelectorAll('.product').length;  // Total number of products
+    let totalSlides = Math.ceil(totalProducts / itemsPerSlide); // Total number of slides
+  
+    // Get the number of products to show per slide based on the screen width
+    function getItemsPerSlide() {
+      if (window.innerWidth >= 1200) {
+        return 4; // 4 items per slide on large screens
+      } else if (window.innerWidth >= 768) {
+        return 3; // 3 items per slide on medium screens
+      } else {
+        return 2; // 2 items per slide on small screens
+      }
+    }
+  
+    // Update the carousel's transform based on the currentIndex
+    function updateCarouselPosition() {
+      const offset = -currentIndex * (100 / itemsPerSlide);  // Calculate the horizontal offset
+      carousel.style.transform = `translateX(${offset}%)`;  // Apply the transform
+    }
+  
+    // Adjust the number of items per slide when resizing the window
+    function adjustItemsPerSlide() {
+      const newItemsPerSlide = getItemsPerSlide();
+      if (newItemsPerSlide !== itemsPerSlide) {
+        itemsPerSlide = newItemsPerSlide;
+        totalSlides = Math.ceil(totalProducts / itemsPerSlide); // Recalculate total slides
+        updateCarouselPosition();
+      }
+    }
+  
+    // Move to the previous slide
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+      updateCarouselPosition();
+    });
+  
+    // Move to the next slide
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === totalSlides - 1) ? 0 : currentIndex + 1;
+      updateCarouselPosition();
+    });
+  
+    // Listen for window resizing to adjust the items per slide
+    window.addEventListener('resize', adjustItemsPerSlide);
+  
+    // Initial setup of the carousel position
+    updateCarouselPosition();
+  });
+  
+
+  </script>
+</body>
+</html>

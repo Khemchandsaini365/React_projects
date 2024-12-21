@@ -1,0 +1,29 @@
+.button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .size-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .size-button:hover {
+    background-color: #ccc;
+  }
+  
+  .size-button.selected {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .size-button:focus {
+    outline: none;
+  }
+  

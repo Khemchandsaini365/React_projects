@@ -1,0 +1,27 @@
+
+@media (maxwidth:400px) {
+    .outer-box{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+   
+}
+
+/* Footer styles */
+.outer-box {
+    padding: 20px;
+  }
+  
+  .box {
+    padding: 10px;
+  }
+  
+  .socil {
+    justify-content: center;
+  }
+  
+  .payments img {
+    max-height: 30px; /* To keep payment icons consistent in size */
+  }
+  

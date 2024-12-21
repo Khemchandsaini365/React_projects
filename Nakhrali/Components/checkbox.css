@@ -1,0 +1,46 @@
+.custom-checkbox {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 12px;
+    padding-right: 15px;
+    
+  }
+  
+  /* Hide the default checkbox */
+  .custom-checkbox input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+  }
+  
+  /* Create the custom checkmark */
+  .custom-checkbox .checkmark {
+    width: 15px;
+    height: 15px;
+    border: 1px solid black;  /* Blue border for the checkbox */
+    border-radius: 4px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    transition: all 0.3s;
+  }
+  
+  /* When checked, show the black checkmark */
+  .custom-checkbox input[type="checkbox"]:checked + .checkmark {
+    /* background-color: blue; */
+    border-color: black;
+  }
+  
+  .custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    width: 6px;
+    height: 12px;
+    border:solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }

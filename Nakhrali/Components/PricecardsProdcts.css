@@ -1,0 +1,36 @@
+/* Wrapper styling (acts as the new container for both boxes) */
+.img-wrapper {
+    position: relative; /* To position the hidden box inside the wrapper */
+    overflow: hidden; /* Hide anything outside the wrapper */
+  }
+  
+  /* Main box styling */
+  .main-box {
+    width: 100%; /* Full width of the wrapper */
+    height: 100%; /* Full height of the wrapper */
+    background-color: #4CAF50; /* Main box color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  /* Hidden box styling */
+  .hidden-box {
+    position: absolute;
+    bottom: -12%; /* Initially hidden below the wrapper */
+    left: 0;
+    width: 100%; /* Full width of the wrapper */
+    height: 12%; /* Height of the hidden box when fully visible */
+    background-color: #ffffff9d; /* Hidden box color */
+    transition: bottom 0.5s ease-in-out; /* Animate the position change */
+  }
+  
+  /* Show the hidden box when hovering over the main box */
+  .wrapper:hover .hidden-box {
+    bottom: 0; /* Slide the box up to 0px from the bottom */
+  }
+ 

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Size Buttons</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.size-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ddd;
+  color: #333;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.size-button:hover {
+  background-color: #ccc;
+}
+
+.size-button.selected {
+  background-color: #333;
+  color: #fff;
+}
+
+.size-button:focus {
+  outline: none;
+}
+
+    </style>
+  <div class="button-group">
+    <button class="size-button" data-size="XS">XS</button>
+    <button class="size-button" data-size="S">S</button>
+    <button class="size-button" data-size="M">M</button>
+    <button class="size-button" data-size="L">L</button>
+    <button class="size-button" data-size="XL">XL</button>
+  </div>
+
+  <script >
+
+    // Select all size buttons
+const buttons = document.querySelectorAll('.size-button');
+
+// Add event listener to each button
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Remove the 'selected' class from all buttons
+    buttons.forEach(btn => btn.classList.remove('selected'));
+    
+    // Add 'selected' class to the clicked button
+    button.classList.add('selected');
+  });
+});
+
+  </script>
+</body>
+</html>
