@@ -1,0 +1,562 @@
+https://testing.eterp.in/Admin_VerifyLogin
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0=",
+    "user":"admin",
+    "pwd":"aa"
+}
+
+
+
+
+https://testing.eterp.in/Admin_UpdateLogin?MainID=58
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0=",
+    "Login":{
+        "LoginUserName":"You",
+        "LoginPassword":"12340",
+        "LoginEmailID":"you@mail.com",
+        "LoginMobile":"8107858632",
+        "CompID":1,
+        "IsDeActive": "true"
+    }
+}
+
+
+https://testing.eterp.in/Admin_InsertLogin
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0=",
+    "Login":{
+  "LoginUserName": "Arohi ",
+  "LoginPassword": "riva@123",
+  "LoginMobile": "8107858632",
+  "LoginEmailID": "riva@mail.com",
+  "LoginIsSuperAdmin": false,
+  "LoginToken": "",
+  "IsKDS": true,
+  "IsWaiter": false,
+  "CompName": "",
+  "CompID":"1",
+  "LoginDate": "2024-11-15T14:30:00"
+
+    }
+}
+
+
+https://testing.eterp.in/Admin_LoginByID?MainID=42
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+
+
+
+https://testing.eterp.in/Admin_UpdateCompany?MainID=26
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0=",
+    "Company":
+    {
+       
+    "CompName": "Eco_Green",
+    "CompAddress": "42 Elm Street, Greenfield",
+    "CompPincode": "302029",
+    "CompStateID": 1,
+    "CompStateName": "",
+    "CompCityID": 1,
+    "CompCityName": "",
+    "CompGSTNo": "09AXDPL8094M1ZG",
+    "CompNoOfDevices": 12,
+    "CompServerName": "mysqlserver.techinnovators.com",
+    "CompServerPort": "443",
+    "CompServerUserName": "TechInvDBAdmin",
+    "CompServerPassword": "#gY72bT3oP9qF",
+    "CompDBName": "TechInnovatorsDB"
+
+
+    }
+}
+
+
+https://testing.eterp.in/Admin_InsertCompany
+
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0=",
+    "Company":  
+                {
+                "CompName": "Bellacasa23",
+                "CompAddress": "Europe",
+                "CompPincode": "302020",
+                "CompStateID": 1,
+                "CompStateName": "",
+                "CompCityID": 1,
+                "CompCityName": "",
+                "CompGSTNo": "09BZTPS1235F1ZV",
+                "CompNoOfDevices": 15,
+                "CompServerName": "dbserver.silvertech.com",
+                "CompServerPort": "5432",
+                "CompServerUserName": "SilverTechAdmin",
+                "CompServerPassword": "sT4rX!8@pKzV",
+                "CompDBName": "SilverTechDB"
+                }
+}
+
+
+https://testing.eterp.in/Admin_CompanyList
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+
+
+https://testing.eterp.in/Admin_GetTokenForCompany?MainID=1
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUJBQTlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+
+https://testing.eterp.in/Admin_StateList
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+ "data": [
+        {
+            "StateID": 1,
+            "State_Name": "UP",
+            "State_Code": "01"
+        }]
+
+https://testing.eterp.in/Admin_CityList
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+"data": [
+        {
+            "CityID": 1,
+            "City_Name": "Jaipur",
+            "City_StateID": 10,
+            "City_StateName": ""
+        }]
+
+
+https://testing.eterp.in/Admin_CompanyList
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+"data": [
+        {
+            "CompID": 1,
+            "CompName": "Club Demo Company1",
+            "CompAddress": "Sitabri, Tonk new",
+            "CompPincode": "302019",
+            "CompStateID": 1,
+            "CompStateName": "UP",
+            "CompCityID": 1,
+            "CompCityName": "Jaipur",
+            "CompGSTNo": "08AATPJ6899H1ZQ",
+            "CompNoOfDevices": 5,
+            "CompServerName": "sg2nlmysql7plsk.secureserver.net",
+            "CompServerPort": "3306",
+            "CompServerUserName": "ClubDCompOrder",
+            "CompServerPassword": "$n9el64I5",
+            "CompDBName": "EClubDCompOrder",
+            "CompToken": ""
+        }]
+
+https://testing.eterp.in/Admin_LoginList
+{
+    "tokenData":"OWdBQUFCK0xDQUFBQUFBQUFBbzlqczBPZ2pBUWhGK2w2ZGtRa0FRU2JpcGUvUW5xdmNKcURLV3R1MFZDakQ2N0xjRm1UN1B6VFdiZWZLTTdJOVM0RXgzd3dpbFZnN0hzQkMycnRPenRReXUrNEpXKzJVRWcvQ25aWDlrZUcwQzJNc2I1RjBEeVpNR1RLUGJuTTRBdndEbEI5NldTM1VoUG1SdEpiVVJROXdnMElaRUNHL2lEUnV2NE5JMno4RHM3Ym03MWF5Y1plRUUwYUd5Y2YweUhyUDJxUEFsbXVaN3J0LzlzS2F6Z254OHFwQWVYOWdBQUFBPT0="
+}
+"data": [
+        {
+            "LoginID": 1,
+            "LoginUserName": "admin",
+            "LoginPassword": "aa",
+            "LoginMobile": "8239500123",
+            "LoginEmailID": "concepttekjpr@gmail.com",
+            "LoginIsSuperAdmin": true,
+            "LoginToken": "",
+            "IsKDS": false,
+            "IsWaiter": false,
+            "CompName": "Club Demo Company1",
+            "LoginDate": "0001-01-01T00:00:00",
+            "CompID": 1,
+            "IsDeActive": null,
+            "CompToken": null
+        }]
+
+https://testing.eterp.in/ProductList
+
+{
+    "tokenData":"cEFFQUFCK0xDQUFBQUFBQUFBcGRqODBPZ2pBUWhGK0Y3TmtRa0VRVGJpb2V2UGdUMUh2VjFSaEtXN2RGWW93K3U2MUFnMlpQTy90TmR1WUpSaFlvSUgzQ1RKYUtpY2VTbFFpcDNjUVJsUW0yV0FTNTVKVzVTZ0VEeU9YWjFJeXdvM2gxQ0ZaMFFnb21TdG43SGtrN01vVTRqTnc0RDlJZHFYWG95MUR3OHFGdmZLeTRMa0tOeDRwUWY1RlFvUEg4V3BLeGZKSkVJNi90TE5kK2RXbS9xK2VaMXJXa2s3MXZrbnBVdk1VNDlzZHMycjZmZDk2TUdRYXZRZGQ2a1VFYSs2MkJSY1g1ZitORzh5MWJwRmV3cnpRVitrcFQ0SWZ4c2Z0cWw5ZHBydzl0UHlueXBBRUFBQT09"
+}
+
+
+https://testing.eterp.in/ProductByCategoryAndLocationWithoutImage?MainID=0&LocID=2&Status=0
+{
+    "tokenData":"cEFFQUFCK0xDQUFBQUFBQUFBcGRqODBPZ2pBUWhGK0Y3TmtRa0VRVGJpb2V2UGdUMUh2VjFSaEtXN2RGWW93K3U2MUFnMlpQTy90TmR1WUpSaFlvSUgzQ1RKYUtpY2VTbFFpcDNjUVJsUW0yV0FTNTVKVzVTZ0VEeU9YWjFJeXdvM2gxQ0ZaMFFnb21TdG43SGtrN01vVTRqTnc0RDlJZHFYWG95MUR3OHFGdmZLeTRMa0tOeDRwUWY1RlFvUEg4V3BLeGZKSkVJNi90TE5kK2RXbS9xK2VaMXJXa2s3MXZrbnBVdk1VNDlzZHMycjZmZDk2TUdRYXZRZGQ2a1VFYSs2MkJSY1g1ZitORzh5MWJwRmV3cnpRVitrcFQ0SWZ4c2Z0cWw5ZHBydzl0UHlueXBBRUFBQT09"
+}
+
+"data": [
+        {
+            "ProdID": 3,
+            "ProdCode": "Panner Tikka Masala",
+            "ProdName": "Panner Tikka Masala",
+            "ProdCateID": 2,
+            "ProdCateName": "BAR",
+            "ProdLocID": 2,
+            "ProdLocName": "Rest Garden",
+            "ProdFullPrice": 426.0,
+            "ProdHalfPrice": 285.0,
+            "ProdCGSTPer": 2.5,
+            "ProdSGSTPer": 2.5,
+            "ProdIGSTPer": 5.0,
+            "ProdVATPer": 0.0,
+            "ProdCessPer": 0.0,
+            "ProdCessValue": 0.0,
+            "ProdIsDeactive": true,
+            "ProdIsStockWise": false,
+            "ProdIsNonHalf": false,
+            "ProdIsMLs": false,
+            "ProdType": 1,
+            "ImageBase64": "",
+            "Unit": 0,
+            "Infos": [
+                {
+                    "Info": ""
+                },
+                {
+                    "Info": ""
+                },
+                {
+                    "Info": ""
+                }
+            ]
+        }]
+
+https://testing.eterp.in/InsertProduct 
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "Prod":{
+        "ProdCode":"Panner Tikka ",
+        "ProdName":"Panner Tikka ",
+        "ProdCateID":"1",
+        "ProdLocID":"1",
+        "ProdFullPrice":"425",
+        "ProdHalfPrice":"285",
+        "ProdCGSTPer":"2.5",
+        "ProdSGSTPer":"2.5",
+        "ProdIGSTPer":"5",
+        "ProdVATPer":"0",
+        "ProdCessPer":"0",
+        "ProdCessValue":"",
+        "ProdIsDeactive":"true",
+        "ProdIsStockWise":"true",
+        "ProdIsMLs":"true",
+        "ProdType":1,
+        "Infos": [
+            {"Info":"Extra Salt"},
+            {"Info":"Extra Pepper"}
+        ]
+    },
+    "dt": ["2024-11-19T14:30:00Z"]
+}
+
+
+https://cluborder.eterp.in/OrdersList
+{
+    "tokenData":"cEFFQUFCK0xDQUFBQUFBQUFBcGRqODBPZ2pBUWhGK0Y3TmtRa0VRVGJpb2V2UGdUMUh2VjFSaEtXN2RGWW93K3U2MUFnMlpQTy90TmR1WUpSaFlvSUgzQ1RKYUtpY2VTbFFpcDNjUVJsUW0yV0FTNTVKVzVTZ0VEeU9YWjFJeXdvM2gxQ0ZaMFFnb21TdG43SGtrN01vVTRqTnc0RDlJZHFYWG95MUR3OHFGdmZLeTRMa0tOeDRwUWY1RlFvUEg4V3BLeGZKSkVJNi90TE5kK2RXbS9xK2VaMXJXa2s3MXZrbnBVdk1VNDlzZHMycjZmZDk2TUdRYXZRZGQ2a1VFYSs2MkJSY1g1ZitORzh5MWJwRmV3cnpRVitrcFQ0SWZ4c2Z0cWw5ZHBydzl0UHlueXBBRUFBQT09"
+}
+
+ "data": [
+        {
+            "OrdID": 1,
+            "OrdNo": "K-1",
+            "OrdDate": "2024-08-10T16:19:21",
+            "OrdDeviceID": "DemoDeviceID",
+            "OrdLoginID": 2,
+            "OrdMemberID": 2,
+            "OrdMemberName": "AGARWAL ANIRUDH",
+            "OrdAssociatedClubID": 0,
+            "OrdAssociatedClubName": "",
+            "RoomID": 0,
+            "RoomNumber": "",
+            "OrdLocID": 2,
+            "OrdLocName": "Rest Garden",
+            "OrdTableID": 2,
+            "OrdTableNo": "BRT-02",
+            "OrdRemarks": "rishiraj11 22",
+            "OrdIsSync": true,
+            "OrderMemberType": "",
+            "OrderIsByMember": true,
+            "OrderIsByNotification": true,
+            "OrderIsCall": false,
+            "OrderIsBillRequest": false,
+            "Details": [
+                {
+                    "OrdDtl_ID": 1,
+                    "OrdDtl_MainID": 1,
+                    "OrdDtl_ProdID": 1,
+                    "OrdDtl_ProdName": "AFGANI PANEER TIKKA",
+                    "OrdDtl_Qty": 4.0,
+                    "OrdDtl_MLs": 0.0,
+                    "OrdDtl_Rate": 399.0,
+                    "OrdDtl_IsHalf": false,
+                    "OrdDtl_OrderStatus": 0,
+                    "OrdDtl_OrderStatusName": "",
+                    "StatusCount": 0,
+                    "OrdInfo": [
+                        {
+                            "OrdProdDtl_ID": 7,
+                            "OrdProdDtl_OrdDtl_ID": 1,
+                            "OrdProdDtl_Info": "Extra Salty"
+                        },
+                        {
+                            "OrdProdDtl_ID": 8,
+                            "OrdProdDtl_OrdDtl_ID": 1,
+                            "OrdProdDtl_Info": "No Spicy"
+                        }
+                    ]
+                },]
+
+
+https://localhost:7239/InsertOrders
+
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "order":
+    {
+        "OrdDeviceID": "DemoDeviceID",
+        "OrdLoginID": 7,
+        "OrdMemberID": 7,
+        "OrdLocID": 7,
+        "OrdTableID": 7,
+        "OrdRemarks": "shivraj",
+        "OrderIsByMember":1,
+        "OrderIsByNotification":1,
+        "OrderIsCall":1,
+        "OrderIsBillRequest":1,
+        "Details": [
+            {
+                "OrdDtl_ProdID": 1,
+                "OrdDtl_Qty": 1.0,
+                "OrdDtl_MLs": 0.0,
+                "OrdDtl_Rate": 399.0,
+                "OrdInfo": [
+                    {
+                        "OrdProdDtl_Info": "Brisk Salt"
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+
+https://localhost:44358/UpdateOrders?MainID=1
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "order":
+    {
+        "OrdDeviceID": "DemoDeviceID",
+        "OrdLoginID": 2,
+        "OrdMemberID": 2,
+        "OrdLocID": 2,
+        "OrdLocName": "Main Rest2",
+        "OrdTableID": 2,
+        "OrdTableNo": "R-02",
+        "OrdRemarks": "rishiraj11 22",
+        "OrderIsByMember":1,
+        "OrderIsByNotification":1,
+        "Details": [
+            {
+                "OrdDtl_ID": 2,
+                "OrdDtl_MainID": 2,
+                "OrdDtl_ProdID": 2,
+                "OrdDtl_Qty": 2.0,
+                "OrdDtl_MLs": 0.0,
+                "OrdDtl_Rate": 499.0,
+                
+                "OrdInfo": [
+                    {
+                        "OrdProdDtl_OrdDtl_ID": 2,
+                        "OrdProdDtl_Info": "Extra Salty"
+                    },
+                    {
+                        "OrdProdDtl_OrdDtl_ID": 2,
+                        "OrdProdDtl_Info": "No Spicy"
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+https://testing.eterp.in/TableReservationList
+{
+    "tokenData":"cEFFQUFCK0xDQUFBQUFBQUFBcGRqODBPZ2pBUWhGK0Y3TmtRa0VRVGJpb2V2UGdUMUh2VjFSaEtXN2RGWW93K3U2MUFnMlpQTy90TmR1WUpSaFlvSUgzQ1RKYUtpY2VTbFFpcDNjUVJsUW0yV0FTNTVKVzVTZ0VEeU9YWjFJeXdvM2gxQ0ZaMFFnb21TdG43SGtrN01vVTRqTnc0RDlJZHFYWG95MUR3OHFGdmZLeTRMa0tOeDRwUWY1RlFvUEg4V3BLeGZKSkVJNi90TE5kK2RXbS9xK2VaMXJXa2s3MXZrbnBVdk1VNDlzZHMycjZmZDk2TUdRYXZRZGQ2a1VFYSs2MkJSY1g1ZitORzh5MWJwRmV3cnpRVitrcFQ0SWZ4c2Z0cWw5ZHBydzl0UHlueXBBRUFBQT09"
+}
+
+ "data": [
+        {
+            "TbResvID": 1,
+            "TbResvNo": "R-1",
+            "TbResvDate": "2024-11-14T15:33:54",
+            "TbResvMemID": 1,
+            "TbResvMemName": "Nimit Jain ji",
+            "TbResvMobile": "9649083001",
+            "TbResvBookingDate": "2024-05-31T00:00:00",
+            "TbResvBookingStartTime": "2024-05-31T14:00:00",
+            "TbResvBookingEndTime": "2024-05-31T14:15:00",
+            "TbResvGuestCount": "7",
+            "Tables": [
+                {
+                    "TableID": 1,
+                    "TableNo": "R-011"
+                }
+            ]
+        }]
+
+
+https://testing.eterp.in/InsertTableReservation
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "TableResv":
+    {
+        "TbResvMemID": 2,
+        "TbResvMemName": "Amit",
+        "TbResvMobile": "7894563210",
+        "TbResvBookingDate": "2024-05-31T00:00:00",
+        "TbResvBookingStartTime": "2024-05-31T14:00:00",
+        "TbResvBookingEndTime": "2024-05-31T14:15:00",
+        "TbResvGuestCount": "7",
+        "Tables": [
+            {
+                "TableID": 1
+            },
+            {
+                "TableID": 2
+            },
+            {
+                "TableID": 3
+            }
+        ]
+    }
+}
+
+https://testing.eterp.in/TableList
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ=="
+}
+"data": [
+        {
+            "TableID": 1,
+            "TableNo": "R-011",
+            "TableLocID": 11,
+            "TableLocName": "",
+            "TableCapacity": "5",
+            "TableStatus": 0,
+            "TableMemName": null,
+            "TableMemID": 0,
+            "TableQRCode": "Test1",
+            "TableIsAssociatedClub": false
+        }]
+
+https://cluborder.eterp.in/InsertTable
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "table":{
+        "TableNo":"01",
+        "TableLocID":"1",
+        "TableCapacity":"5",
+        "TableQRCode":"Test1"
+    }
+}
+
+https://testing.eterp.in/LocationList
+{
+    "tokenData":"cEFFQUFCK0xDQUFBQUFBQUFBcGRqODBPZ2pBUWhGK0Y3TmtRa0VRVGJpb2V2UGdUMUh2VjFSaEtXN2RGWW93K3U2MUFnMlpQTy90TmR1WUpSaFlvSUgzQ1RKYUtpY2VTbFFpcDNjUVJsUW0yV0FTNTVKVzVTZ0VEeU9YWjFJeXdvM2gxQ0ZaMFFnb21TdG43SGtrN01vVTRqTnc0RDlJZHFYWG95MUR3OHFGdmZLeTRMa0tOeDRwUWY1RlFvUEg4V3BLeGZKSkVJNi90TE5kK2RXbS9xK2VaMXJXa2s3MXZrbnBVdk1VNDlzZHMycjZmZDk2TUdRYXZRZGQ2a1VFYSs2MkJSY1g1ZitORzh5MWJwRmV3cnpRVitrcFQ0SWZ4c2Z0cWw5ZHBydzl0UHlueXBBRUFBQT09"
+}
+ 	{
+            "LocID": 7,
+            "LocName": "Main e Restaurant",
+            "LocCategory": 0,
+            "ImageBase64": ""
+        },
+        {
+            "LocID": 8,
+            "LocName": " ma Main Restaurant",
+            "LocCategory": 0,
+            "ImageBase64": ""
+        }
+
+https://cluborder.eterp.in/InsertLocation
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+    "Loc":{
+        "LocName":"Main Restaurant"
+    }
+}
+
+https://testing.eterp.in/RoomMasterList
+{
+    "tokenData":"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ=="
+}
+
+  "data": [
+        {
+            "RoomId": 1,
+            "RoomNumber": "224"
+        },
+        {
+            "RoomId": 2,
+            "RoomNumber": "500"
+        },
+        {
+            "RoomId": 3,
+            "RoomNumber": "20"
+        },
+        {
+            "RoomId": 4,
+            "RoomNumber": "25"
+        },
+        {
+            "RoomId": 5,
+            "RoomNumber": "250"
+        },
+        {
+            "RoomId": 6,
+            "RoomNumber": "Ac5"
+        },
+        {
+            "RoomId": 7,
+            "RoomNumber": "G-1"
+        },
+        {
+            "RoomId": 8,
+            "RoomNumber": "G-2"
+        },
+        {
+            "RoomId": 9,
+            "RoomNumber": "26"
+        }
+    ],
+
+
+
+https://testing.eterp.in/InsertCompanyimage
+const formdata = new FormData();
+formdata.append("Token", "RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==");
+formdata.append("compID", "2");
+formdata.append("images", fileInput.files[0], "/C:/Users/CTS-7/Pictures/Meta/Screenshot 2024-12-07 173115.png");
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://testing.eterp.in/InsertCompanyimage", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
