@@ -12,7 +12,6 @@ import {
   IconButton,
   Snackbar,
   Tooltip,
-  CircularProgress,
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
@@ -33,7 +32,7 @@ const EditCompany = ({ heading, btn }) => {
   const [companyInitialState, setCompany] = useState(state);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const [showPasswordFTP, setShowPasswordFTP] = useState(false);
@@ -132,79 +131,39 @@ const EditCompany = ({ heading, btn }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,value);
-    
-    // Handle special case for "CompStateID"
-    if (name === "Company.CompStateID") {
-      // Filter the states to find the state name corresponding to the selected StateID
-      let CompStateName = states?.filter((item) => item?.StateID == value)[0]?.State_Name;
-  
-      // Update the state with the corresponding state name
-      setCompany((prevState) => ({
-        ...prevState,
-        Company: {
-          ...prevState.Company,
-          CompStateID: value, // Update CompStateID as well
-          CompStateName, // Set the CompStateName based on the selected StateID
-        }
-      }));
-      return; // Early return since we already handled this special case
-    }
-  
-    // Handle special case for "CompCityID"
-    if (name === "Company.CompCityID") {
-      // Filter the cities to find the city name corresponding to the selected CityID
-      let CompCityName = cities?.filter((item) => item?.CityID == value)[0]?.City_Name;
-  
-      // Update the state with the corresponding city name
-      setCompany((prevState) => ({
-        ...prevState,
-        Company: {
-          ...prevState.Company,
-          CompCityID: value, // Update CompCityID as well
-          CompCityName, // Set the CompCityName based on the selected CityID
-        }
-      }));
-      return; // Early return since we already handled this special case
-    }
-  
-    // Handle nested data or simple fields
-    if (name.includes('Settings') ) {
-      const keys = name.split('.');
-      
-      
-      setCompany(prevState => {
-        const updatedData = { ...prevState };
-        let temp = updatedData;
-        
-        // Loop through the keys to access the nested object and update the value
-        keys.forEach((key, index) => {
-       
-          
-          if (index === keys.length - 1) {
-            temp[key] = value;
-          } else {
+    setCompany((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
 
-            temp = temp[key];
-          }
-        });
-  
-        return updatedData;
-      });
-    } else {
-      // Handle simple fields (non-nested)
-      setCompany(prevState => ({
+    let CompStateName = states?.filter((item) => {
+      return item?.StateID == value;
+    })[0]?.State_Name;
+
+    if (name == "CompStateID") {
+      setCompany((prevState) => ({
         ...prevState,
-        [name]: value,
+        ["CompStateName"]: CompStateName,
+      }));
+    }
+
+    let CompCityName = cities?.filter((item) => {
+      return item?.CityID == value;
+    })[0]?.City_Name;
+
+    if (name == "CompCityID") {
+      setCompany((prevState) => ({
+        ...prevState,
+        ["CompCityName"]: CompCityName,
       }));
     }
   };
-  
 
   const updateCompany = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const adminTokken = localStorage.getItem("userToken");
+
     const raw = JSON.stringify({
       tokenData: adminTokken,
       Company: {
@@ -224,10 +183,10 @@ const EditCompany = ({ heading, btn }) => {
         CompDBName: companyInitialState.CompDBName,
         CompToken: "",
         "Settings": {
-           "Set_FTPAddress": companyInitialState?.Settings?.Set_FTPAddress,
-           "Set_FTPPort": companyInitialState?.Settings?.Set_FTPPort,
-           "Set_FTPUserName": companyInitialState?.Settings?.Set_FTPUserName,
-           "Set_FTPPassword": companyInitialState?.Settings?.Set_FTPPassword,
+           "Set_FTPAddress": compFTPDetails.compFTPaddress,
+           "Set_FTPPort": compFTPDetails.compFTPport,
+           "Set_FTPUserName": compFTPDetails.compFTPusername,
+           "Set_FTPPassword": compFTPDetails.compFTPpassword,
            "Set_ProductsFolder": "Products",
            "Set_MemberFolder": "Members",
            "Set_LocationFolder": "Locations",
@@ -251,15 +210,12 @@ const EditCompany = ({ heading, btn }) => {
     fetch(`${base_url}/Admin_UpdateCompany?MainID=${compID}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        
-        if (result.status === true) {
-          setLoading(false);
-          navigate("/companies");
-        } else {
+        if (result.status === false) {
           toast.error("Error in updating Company", {
             autoClose: 3000,
           });
-          setLoading(false);
+        } else {
+          navigate("/companies");
         }
       })
       .catch((error) => {
@@ -272,9 +228,6 @@ const EditCompany = ({ heading, btn }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
-    console.log(companyInitialState);
-    
     updateCompany();
   };
 
@@ -284,18 +237,9 @@ const EditCompany = ({ heading, btn }) => {
     }
   }, [state]);
   return (
-    <> 
-    <ToastContainer />
-    {loading ? (
-              <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ height: "70vh" }}
-              >
-                <CircularProgress />
-              </div> // Display a loading message or spinner
-            ): (
-
-              <div className="container mt-3">
+    <>
+      <ToastContainer />
+      <div className="container mt-3">
         <h2 className="text-center">{heading}</h2>
         <form className="form-horizontal" onSubmit={handleSubmit}>
           {/* LiceNo / CompID */}
@@ -693,9 +637,9 @@ const EditCompany = ({ heading, btn }) => {
                           variant="outlined"
                           sx={{ width: "100%" }}
                           size="small"
-                          name="Settings.Set_FTPAddress"
-                          value={companyInitialState?.Settings?.Set_FTPAddress}
-                          onChange={handleChange}
+                          name="compFTPaddress"
+                          value={compFTPDetails.compFTPaddress}
+                          onChange={handleFTPchange}
                         />
                       </div>
                     </div>
@@ -714,9 +658,9 @@ const EditCompany = ({ heading, btn }) => {
                           variant="outlined"
                           sx={{ width: "100%" }}
                           size="small"
-                          name="Settings.Set_FTPPort"
-                          value={companyInitialState?.Settings?.Set_FTPPort}
-                          onChange={handleChange}
+                          name="compFTPport"
+                          value={compFTPDetails.compFTPport}
+                          onChange={handleFTPchange}
                         />
                       </div>
                     </div>
@@ -735,8 +679,8 @@ const EditCompany = ({ heading, btn }) => {
                           variant="outlined"
                           sx={{ width: "100%" }}
                           size="small"
-                          name="Settings.Set_FTPUserName"
-                          value={companyInitialState?.Settings?.Set_FTPUserName}
+                          name="Set_CompanyFolder"
+                          value={companyInitialState?.Settings?.Set_CompanyFolder}
                           onChange={handleChange}
                         />
                       </div>
@@ -758,9 +702,9 @@ const EditCompany = ({ heading, btn }) => {
                           <OutlinedInput
                             id="outlined-adornment-password"
                             type={showPasswordFTP ? "text" : "password"}
-                            name="Settings.Set_FTPPassword"
-                            value={companyInitialState?.Settings?.Set_FTPPassword}
-                            onChange={handleChange}
+                            name="compFTPpassword"
+                            value={compFTPDetails.compFTPpassword}
+                            onChange={handleFTPchange}
                             autoComplete="off"
                             endAdornment={
                               <InputAdornment position="end">
@@ -800,9 +744,6 @@ const EditCompany = ({ heading, btn }) => {
           </div>
         </form>
       </div>
-            ) }
-      
-      
     </>
   );
 };

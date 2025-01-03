@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
 import RouteWrapper from "./RouterWrapper/RouterWrapper";
-import Navbar from "./Components/Navbar";
 import Login from "./Components/Login";
 import License from "./Components/License";
 import Companies from "./Components/Companies";
@@ -14,26 +12,16 @@ import NewLicenseForm from "./Components/NewLicenseForm";
 import CompanyDashboard from "./Components/CompanyDashboard";
 import ClubLocations from "./Components/ClubLocations";
 import AllProductList from "./Components/AllProductList";
-import { token } from "./Secure";
 import AllLogins from "./Components/AllLogins";
 import AddNewClient from "./Components/AddNewClient";
 import EditClient from "./Components/EditClient";
 import AllOrdersList from "./Components/AllOrdersList";
-import CardProducts from "./Components/CardProducts";
-import AllReservation from "./Components/AllReservation";
 import Reservation from "./Components/Reservation";
-import NewResrevTable from "./Components/NewResrevTable";
-import EditReservTable from "./Components/EditReservTable";
-import Testing from "./Components/TestingComp";
-import SearchableInput from "./Components/TestingComp";
-import RoleForm from "./Components/TestingComp";
-import BasicDatePicker from "./Components/TestingComp";
-import DatePickers from "./Components/TestingComp";
-import Example from "./Components/TestingComp";
-import ModalpopOver from "./Components/ModalpopOver";
+
+import Example from "./Components/Test2";
+
 
 function App() {
-  const isAuthenticated = token;
 
   return (
     <Router>
@@ -88,12 +76,9 @@ function App() {
               path="/companydasboard/:companyId/:type/reservation"
               element={<Reservation />}
             />
-            {/* <Route path="/companydasboard/:companyId/:type/reservation/newtablereserve" element={<NewResrevTable />} />
-            <Route path="/companydasboard/:companyId/:type/reservation/edittablereserve/:reserveID" element={<EditReservTable />} /> */}
             <Route path="/editClientLogin/:id" element={<EditClient />} />
             <Route path="/addNewClient" element={<AddNewClient />} />
-            <Route path="/mob" element={<Example />} />
-            <Route path="/test" element={<ModalpopOver />} />
+            {/* <Route path="/test" element={<Example />} /> */}
           </Routes>
         }
       />

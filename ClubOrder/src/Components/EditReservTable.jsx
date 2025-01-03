@@ -51,7 +51,7 @@ const EditReservTable = ({ heading, btn }) => {
     fetch(`${base_url}/Admin_UpdateLogin?MainID=${reserveID}`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        console.log(result);
+        
         navigate("/allclients");
       })
       .catch((error) => console.error(error));

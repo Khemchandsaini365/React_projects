@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdGridView } from "react-icons/md";
 import { BiRupee } from "react-icons/bi";
 import foodImg from "../Images/Food.jpg"; // Placeholder image
 import {
@@ -9,10 +9,14 @@ import {
   DialogContent,
   DialogTitle,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import { base_url } from "../env";
-
-const CardProducts = ({ products }) => {
+import BackButton from "./BackButton";
+import { BsViewList } from "react-icons/bs";
+import GridViewIcon from '@mui/icons-material/GridView';
+import ListIcon from '@mui/icons-material/List';
+const CardProducts = ({ products ,Name,setviewIcn,viewIcn}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -79,10 +83,10 @@ const CardProducts = ({ products }) => {
         ImageBase64: selectedProduct.ImageBase64,
         Infos: selectedProduct.Infos || [],
       };
-
+      const compToken=localStorage.getItem("tokken")
       const raw = JSON.stringify({
-        tokenData:
-          "RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
+        tokenData:compToken,
+          // "RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3TmtRa0FRU2Jpb2V2UGdUMUh1RjFaaVd0bTZMaEJCOGRnc0JzcWZaK1NhejI0RlZIQ1drSGV4VXBabHNqNnhDU0oyU0JXcnJYWkY3dVJLMWZTc0pLOGpWMHphTWNLWkUvZkJPVkNKNUc2MmRmMGN5QTVsQzZBZkREQm1rTDlLVU1LKzFGRlZyUGlMUnduRGZZRkVUbWhIeEpkcUZQeXV5am8raUlGNTJOOGROcmNPMW8xeDRaa3lqcUhUK0pXcGkvcE5KdUpqWmRxcmZ6OW1NV1FiOWF2NzZrRUVhOW4rQnZ0WkFEZ0VBQUE9PQ==",
         Prod: productData,
       });
 
@@ -130,22 +134,51 @@ const CardProducts = ({ products }) => {
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
+  const LayoutandAddBtn = () => {
+      const toggel = () => {
+        setviewIcn((prevState) => !prevState);
+      };
+      return (
+        <>
+          {/* <a name="" id="" class="btn btn-primary px-4 mx-2" role="button" >
+                Add
+              </a> */}
+          <div onClick={toggel}>
+            {viewIcn ?  <Tooltip title="Change to List View"  className="btn  btn-outline-dark ">  <ListIcon  /> </Tooltip> : <BsViewList />}
+          </div>
+        </>
+      );
+    };
   return (
     <>
-      <div className="main d-flex justify-content-center flex-wrap align-items-center p-2 gap-3">
-        <div className="w-100 w-sm-auto d-flex justify-content-center">
+      <div className=" d-flex justify-content-between gap-5 mt-1 " style={{backgroundColor:"#a5d8dd"}}>
+        <div className="heading h4">
+          <div className="d-inline p-0 mx-2">
+            <BackButton />
+          </div>
+          {Name}
+        </div>
+        
+        <div className="heading d-flex gap-2" >
+          {/* {hidebtn ? "" :} */}
+          <div className="w-sm-auto d-flex justify-content-center">
           <input
             type="text"
             placeholder="Search Products..."
             value={searchTerm}
             onChange={handleSearch}
-            className="form-control-sm border border-dark w-25"
+            className="form-control-sm border border-dark "
           />
         </div>
+          <LayoutandAddBtn />
+        </div>
+        
+      </div>
+      <div className="main d-flex justify-content-center flex-wrap align-items-center p-2 gap-3">
+        
 
         {/* Map through the current page's products */}
-        {currentProducts.map((product) => (
+        {filteredProducts.map((product) => (
           <div
             className="card"
             style={{ width: "300px", minHeight: "400px", overflow: "hidden" }}
@@ -154,7 +187,7 @@ const CardProducts = ({ products }) => {
             <div>
               <img
                 className="card-img-top"
-                src="" // Fallback image
+                src={product?.ImageBase64 || ""} // Fallback image
                 alt=""
                 style={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
@@ -191,10 +224,15 @@ const CardProducts = ({ products }) => {
                   Price (<BiRupee />)
                 </h6>
                 <div className="w-100">
-                  <p className="m-0 p-0">
+                  <p className="m-0 p-0 d-flex gap-5">
+                    <p>
+
                     <strong>F</strong>: {product.ProdFullPrice}
-                    <span> </span>
+                    </p>
+                    <p>
+
                     <strong>H</strong>: {product.ProdHalfPrice}
+                    </p>
                   </p>
                 </div>
               </div>
@@ -217,10 +255,10 @@ const CardProducts = ({ products }) => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="d-flex justify-content-center mt-3">
+      {/* <div className="d-flex justify-content-center mt-3">
         <nav>
           <ul className="pagination">
-            {/* Previous Button */}
+           
             <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
               <button
                 className="page-link"
@@ -230,7 +268,7 @@ const CardProducts = ({ products }) => {
               </button>
             </li>
 
-            {/* Page Numbers */}
+            
             {[...Array(Math.min(10, totalPages))].map((_, index) => (
               <li
                 key={index}
@@ -247,7 +285,7 @@ const CardProducts = ({ products }) => {
               </li>
             ))}
 
-            {/* Next Button */}
+            
             <li
               className={`page-item ${
                 currentPage === totalPages ? "disabled" : ""
@@ -262,7 +300,7 @@ const CardProducts = ({ products }) => {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>

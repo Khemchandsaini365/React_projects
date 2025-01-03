@@ -220,12 +220,12 @@ const ReUsableDashboard = () => {
       </div>
 
       <div className="charts d-flex justify-content-center gap-3 flex-wrap p-2">
-        <div className="" style={{ width: "800px" }}>
+        {/* <div className="" style={{ width: "800px" }}>
           <Chart />
         </div>
         <div className="" style={{ width: "800px" }}>
           <Chart />
-        </div>
+        </div> */}
         <div className="" style={{ width: "1620px" }}>
           <BarChart2 />
         </div>

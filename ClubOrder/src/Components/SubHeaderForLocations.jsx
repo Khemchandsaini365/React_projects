@@ -92,7 +92,7 @@ const SubHeaderForLocations = ({
         {/* <a name="" id="" class="btn btn-primary px-4 mx-2" role="button" >
               Add
             </a> */}
-        <button className="btn  btn-outline-dark" onClick={toggel}>
+        <button className="btn btn-sm btn-outline-dark" onClick={toggel}>
           {viewIcn ? <MdGridView /> : <BsViewList />}
         </button>
       </>
@@ -101,21 +101,7 @@ const SubHeaderForLocations = ({
   return (
     <>
       {/* This form only visible in smaller screens than laptop */}
-      <form
-        className="d-flex search  d-lg-none d-xl-none d-xxl-none m-3"
-        id="search"
-        role="search"
-      >
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button className="btn btn-outline-primary " type="submit">
-          Search
-        </button>
-      </form>
+
       {/* Form end */}
       {/* Drop Down for specific Club Locations */}
 
@@ -123,7 +109,7 @@ const SubHeaderForLocations = ({
 
       {/* Model */}
 
-      <div className="container-fluid p-1  my-2 d-flex justify-content-between">
+      <div className=" d-flex justify-content-between gap-5">
         <div className="heading h4">
           <div className="d-inline p-0 mx-2">
             <BackButton />

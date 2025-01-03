@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import img from "../Images/Add_image.png";
+import { BiDownload } from "react-icons/bi";
 const ImageUpload = () => {
   const [imageSrc, setImageSrc] = useState(null); // Stores the selected image's data URL
-
   // Handle file input change (when user selects an image)
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -26,8 +26,9 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
+    <div className=" border border-dark m-1" style={{height:"300px",width:"300px"}}>
       {/* Image that triggers file input */}
+      <div className="border border-dark" style={{height:"300px",width:"300px", }}>
       <img
         className="card-img"
         src={imageSrc || img} // Fallback image when no file is selected
@@ -35,11 +36,14 @@ const ImageUpload = () => {
         onClick={() => document.getElementById("fileInput").click()}
         style={{
           cursor: "pointer",
-          maxWidth: "100%",
+          width: "100%",
         }}
       />
+      </div>
 
       {/* Hidden file input for selecting an image */}
+      <div className="border border-dark"> 
+
       <input
         type="file"
         id="fileInput"
@@ -47,7 +51,10 @@ const ImageUpload = () => {
         accept="image/*"
         onChange={handleFileChange}
       />
-
+      </div>
+          <div className="btn btn-outline-dark btn-sm " onClick={handleSaveImage} >
+          <BiDownload/>
+          </div>
       {/* Display the uploaded image and the save button */}
     </div>
   );

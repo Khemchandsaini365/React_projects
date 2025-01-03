@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { OrbitProgress } from "react-loading-indicators";
 import { useDispatch } from "react-redux";
 import EasyPosLogo from "../Images/EasyPOSLogo.png";
-import { TextField } from "@mui/material";
+
 const Login = () => {
   const dispatch = useDispatch();
   const [user, setUserName] = useState({
@@ -46,6 +46,26 @@ const Login = () => {
   const navigate = useNavigate();
 
   const logo = EasyPosLogo;
+  const CheckUpdates = () => {
+          const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          const adminToken=localStorage.getItem("userToken")
+          const raw = JSON.stringify({
+            tokenData:"RGdFQUFCK0xDQUFBQUFBQUJBQTlqODBPZ2pBUWhGK0Y3SmtRRUFNSk54VVBYdndKNnIzQ2FneWxyZHNpSVFTZjNVS0E3R2wydnNuc2RtQmtpUUtTRG5heVVreTBSMVloSkZhSkhKVnhybGc2bWVTMWVVc0JMbVR5YVJwR09GTzhmamduS3BDY2pWTFd2eVBwZ1V3ZzhQeGhoZ3pTRjJsSzZOZEs4S3JWSHg0cnJrdFBZMTRUNmhIeEJKcUZQMHN5bGc5RFAxcDJOOHROcmNPMW8xeDRwblVqcWJEK0pXeWk4aWZpWURIVDdWUy9uN01wTXd4NmQvNzZrRUt5N3YvRVNxRTlEZ0VBQUE9PQ=="
+          });
+  
+          const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+          };
+  
+          fetch(`${base_url}/CheckUpdates`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {console.log(result.status)} )
+            .catch((error) => console.error(error));
+    };
 
   const handelLogin = (e) => {
     e.preventDefault();
@@ -77,16 +97,20 @@ const Login = () => {
           localStorage.setItem("username", user?.username);
           setLoader(false);
           navigate("/companies");
+          CheckUpdates()
         } else {
           toast.error(result.error, {
             autoClose: 1000,
           });
           setLoader(false);
         }
-        // const data = result.status;
-        // console.log(data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error("API Failed", {
+          autoClose: 1000,
+        });
+        setLoader(false);
+        console.error(error)});
   };
   const [loading, setLoading] = useState(false);
   return loader ? (
@@ -99,7 +123,7 @@ const Login = () => {
         alignItems: "center",
       }}
     >
-      <OrbitProgress color="#" size="medium" text="ET" textColor="" />
+      <OrbitProgress color="#" size="medium" text="E Club" textColor="" />
     </div>
   ) : (
     <>

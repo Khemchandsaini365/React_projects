@@ -6,10 +6,16 @@ import {
   CircularProgress,
   FormControl,
   FormControlLabel,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   Radio,
   RadioGroup,
   TextField,
 } from "@mui/material";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddNewClient = () => {
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -20,6 +26,10 @@ const AddNewClient = () => {
   const [companies, setCompanies] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   let loginIsSuperAdmin = false;
   let isKDS = false;
@@ -42,7 +52,7 @@ const AddNewClient = () => {
     ClientEmail: "",
     ClientPassword: "",
     ClientCompanyName: "", // Default to empty string
-    ClientCompanyID:""
+    ClientCompanyID: "",
   });
 
   // Handle input change for the dropdown
@@ -55,10 +65,10 @@ const AddNewClient = () => {
     myHeaders.append("Content-Type", "application/json");
     const date = new Date();
     const formattedDate = date.toISOString().slice(0, 19);
-    const adminTokken=localStorage.getItem("userToken")
+    const adminTokken = localStorage.getItem("userToken");
 
     const raw = JSON.stringify({
-      tokenData:adminTokken,
+      tokenData: adminTokken,
       Login: {
         LoginUserName: Client.ClientName,
         LoginPassword: Client.ClientPassword,
@@ -69,8 +79,9 @@ const AddNewClient = () => {
         IsKDS: isKDS,
         IsWaiter: isWaiter,
         CompName: Client.ClientCompanyName,
-        CompID:Client.ClientCompanyID,
+        CompID: Client.ClientCompanyID,
         LoginDate: formattedDate,
+        IsDeActive: "",
       },
     });
 
@@ -82,13 +93,19 @@ const AddNewClient = () => {
     };
 
     fetch(`${base_url}/Admin_InsertLogin`, requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((result) => {
-        // console.log(result);
-        setCompanies((prevState) => [...prevState, Client]);
-        navigate("/allclients");
+        if (result.status) {
+          setCompanies((prevState) => [...prevState, Client]);
+          navigate("/allclients");
+        } else {
+          toast.error(result.error, { autoClose: 3000 });
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error(error, { autoClose: 3000 });
+        console.error(error);
+      });
   };
 
   // Fetch companies from the API
@@ -96,12 +113,12 @@ const AddNewClient = () => {
     const fetchCompanies = async () => {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      const adminTokken=localStorage.getItem("userToken")
+      const adminTokken = localStorage.getItem("userToken");
 
       const raw = JSON.stringify({
-        tokenData:adminTokken,
+        tokenData: adminTokken,
       });
-      
+
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -163,6 +180,33 @@ const AddNewClient = () => {
     //   Kds: selectedRole === "Kds",
     //   Waitwer: selectedRole === "Waiter",
     // });
+    // console.log(Client);
+
+    if (!(loginIsSuperAdmin || isKDS || isWaiter)) {
+      toast.error("Role is required");
+      return;
+    }
+    if (!Client.ClientName) {
+      toast.error("Username is required");
+      return;
+    }
+    if (!Client.ClientMobile) {
+      toast.error("Mobile is required");
+      return;
+    }
+    if (Client.ClientMobile.length !== 10) {
+      toast.error("Mobile number must be 10 digits");
+      return;
+    }
+
+    if (!Client.ClientPassword) {
+      toast.error("Password is required");
+      return;
+    }
+    if (!Client.ClientCompanyName) {
+      toast.error("CompanyName is required");
+      return;
+    }
 
     await addclient();
   };
@@ -179,132 +223,135 @@ const AddNewClient = () => {
   };
 
   return (
-    <div className="container mt-3">
-      <h2 className="text-center">Add Client</h2>
-      {loading ? (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "70vh" }}
-        >
-          <CircularProgress />
-        </div> // Display a loading message or spinner
-      ) : (
-        <form className="form-horizontal" onSubmit={handleSubmit}>
-          {/* Radio options */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">Role</label>
+    <>
+      <ToastContainer />
+      <div className="container mt-3">
+        <h2 className="text-center">Add Client</h2>
+        {loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "70vh" }}
+          >
+            <CircularProgress />
+          </div> // Display a loading message or spinner
+        ) : (
+          <form className="form-horizontal" onSubmit={handleSubmit} autoComplete="off">
+            {/* Radio options */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">Role</label>
+              </div>
+              <div className="col-sm-8">
+                <FormControl component="fieldset">
+                  <RadioGroup value={selectedRole} onChange={handleChange} row>
+                    <FormControlLabel
+                      value="SuperAdmin"
+                      control={<Radio />}
+                      label="SuperAdmin"
+                    />
+                    <FormControlLabel
+                      value="Kds"
+                      control={<Radio />}
+                      label="KDS"
+                    />
+                    <FormControlLabel
+                      value="Waiter"
+                      control={<Radio />}
+                      label="Waiter"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
             </div>
-            <div className="col-sm-8">
-              <FormControl component="fieldset">
-                <RadioGroup value={selectedRole} onChange={handleChange} row>
-                  <FormControlLabel
-                    value="SuperAdmin"
-                    control={<Radio />}
-                    label="SuperAdmin"
-                  />
-                  <FormControlLabel
-                    value="Kds"
-                    control={<Radio />}
-                    label="KDS"
-                  />
-                  <FormControlLabel
-                    value="Waiter"
-                    control={<Radio />}
-                    label="Waiter"
-                  />
-                </RadioGroup>
-              </FormControl>
+            {/* User Name */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">User Name</label>
+              </div>
+              <div className="col-sm-8">
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  className="w-100"
+                  type="text"
+                  name="ClientName"
+                  autoComplete="off"
+                  value={Client.ClientName}
+                  onChange={handleChangeOFCompName}
+                />
+              </div>
             </div>
-          </div>
-          {/* User Name */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">User Name</label>
-            </div>
-            <div className="col-sm-8">
-              <TextField
-                variant="outlined"
-                size="small"
-                className="w-100"
-                type="text"
-                name="ClientName"
-                value={Client.ClientName}
-                onChange={handleChangeOFCompName}
-              />
-            </div>
-          </div>
 
-          {/* Mobile */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">Mobile</label>
+            {/* Mobile */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">Mobile</label>
+              </div>
+              <div className="col-sm-8">
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  className="w-100"
+                  type="Number"
+                  name="ClientMobile"
+                  value={Client.ClientMobile}
+                  onChange={handleChangeOFCompName}
+                />
+              </div>
             </div>
-            <div className="col-sm-8">
-              <TextField
-                variant="outlined"
-                size="small"
-                className="w-100"
-                type="Number"
-                name="ClientMobile"
-                value={Client.ClientMobile}
-                onChange={handleChangeOFCompName}
-              />
-            </div>
-          </div>
 
-          {/* Email */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">Email</label>
+            {/* Email */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">Email</label>
+              </div>
+              <div className="col-sm-8">
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  className="w-100"
+                  type="email"
+                  name="ClientEmail"
+                  value={Client.ClientEmail}
+                  onChange={handleChangeOFCompName}
+                />
+              </div>
             </div>
-            <div className="col-sm-8">
-              <TextField
-                variant="outlined"
-                size="small"
-                className="w-100"
-                type="email"
-                name="ClientEmail"
-                value={Client.ClientEmail}
-                onChange={handleChangeOFCompName}
-              />
-            </div>
-          </div>
 
-          {/* Company Name */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">Company Name</label>
+            {/* Company Name */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">Company Name</label>
+              </div>
+              <div className="col-sm-8">
+                <Autocomplete
+                  value={selectedValue}
+                  size="small"
+                  onChange={handleSelect}
+                  options={companies}
+                  getOptionLabel={(option) => option.CompName}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Select Company" />
+                  )}
+                  disableClearable
+                  // Limit the visible items and enable scrolling in the dropdown
+                  ListboxProps={{
+                    style: {
+                      maxHeight: "200px", // Limit the dropdown height to 200px
+                      overflowY: "auto", // Enable vertical scrolling
+                    },
+                  }}
+                />
+              </div>
             </div>
-            <div className="col-sm-8">
-              <Autocomplete
-                value={selectedValue}
-                size="small"
-                onChange={handleSelect}
-                options={companies}
-                getOptionLabel={(option) => option.CompName}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select Company" />
-                )}
-                disableClearable
-                // Limit the visible items and enable scrolling in the dropdown
-                ListboxProps={{
-                  style: {
-                    maxHeight: "200px", // Limit the dropdown height to 200px
-                    overflowY: "auto", // Enable vertical scrolling
-                  },
-                }}
-              />
-            </div>
-          </div>
 
-          {/* Password */}
-          <div className="row mb-3">
-            <div className="col-sm-4">
-              <label className="control-label h6">Password</label>
-            </div>
-            <div className="col-sm-8">
-              <TextField
+            {/* Password */}
+            <div className="row mb-3">
+              <div className="col-sm-4">
+                <label className="control-label h6">Password</label>
+              </div>
+              <div className="col-sm-8">
+                {/* <TextField
                 type="password"
                 className="form-control"
                 name="ClientPassword"
@@ -312,19 +359,54 @@ const AddNewClient = () => {
                 onChange={handleChangeOFCompName}
                 size="small"
                 variant="outlined"
-              />
-            </div>
-          </div>
+              /> */}
 
-          {/* Submit Button */}
-          <div className="text-center mb-3">
-            <button className="btn btn-primary col-3" id="btn-submit">
-              Save
-            </button>
-          </div>
-        </form>
-      )}
-    </div>
+                <FormControl
+                  sx={{ width: "100%" }}
+                  variant="outlined"
+                  size="small"
+                >
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    name="ClientPassword"
+                    value={Client.ClientPassword}
+                    onChange={handleChangeOFCompName}
+                    autoComplete="new-password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={
+                            showPassword
+                              ? "hide the password"
+                              : "display the password"
+                          }
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <MdVisibilityOff />
+                          ) : (
+                            <MdVisibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="text-center mb-3">
+              <button className="btn btn-primary col-3" id="btn-submit">
+                Save
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+    </>
   );
 };
 

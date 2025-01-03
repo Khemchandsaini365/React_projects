@@ -34,9 +34,16 @@ const Example = () => {
     columns,
     data, // data should be stable (useState, useMemo, or defined outside)
     enableRowNumbers: true,
-    initialState: {
-      density: "compact",
+    initialState:{density:"compact"},
+    muiTableHeadCellProps: {
+      sx: {
+        bgcolor: '#a5d8dd', // Primary color
+        color: 'black', // Text color for header
+        fontWeight: 'bold', // Optional: bold header text
+      }
     },
+    enablePagination:false,
+    enableBottomToolbar:false,
     enableClickToCopy: true,
   });
 

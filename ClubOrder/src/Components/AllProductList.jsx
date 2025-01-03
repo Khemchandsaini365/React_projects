@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import SubHeaderForLocations from "./SubHeaderForLocations";
-import { BiDownArrow, BiEdit } from "react-icons/bi";
-import { MdDelete, MdDeleteForever, MdDownload } from "react-icons/md";
-import AllProductsTable from "./AllProductsTable";
+import { BiDownArrow, BiDownload, BiEdit, BiSearch } from "react-icons/bi";
+import { MdDelete, MdDeleteForever, MdDownload, MdGridView } from "react-icons/md";
+// import AllProductsTable from "./AllProductsTable";
 import { base_url } from "../env";
 import {
   Box,
@@ -13,6 +13,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import CardProducts from "./CardProducts";
 // import ProductTable from "./ProductTable";
@@ -20,11 +22,21 @@ import { mkConfig, generateCsv, download } from "export-to-csv";
 import { useMemo } from "react";
 import {
   MaterialReactTable,
+  MRT_GlobalFilterTextField,
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
   useMaterialReactTable,
 } from "material-react-table";
 import { FiDelete } from "react-icons/fi";
 import { RiDeleteRow } from "react-icons/ri";
 import { toast, ToastContainer } from "react-toastify";
+import BackButton from "./BackButton";
+import { BsViewList } from "react-icons/bs";
+
+import { grey } from "@mui/material/colors";
+import GridViewIcon from '@mui/icons-material/GridView';
 
 const AllProductList = ({ heading }) => {
   const { type } = useParams();
@@ -33,54 +45,69 @@ const AllProductList = ({ heading }) => {
   const [viewIcn, setviewIcn] = useState(false);
   const [openDialog, setOpenDialog] = useState(false); // State for Dialog
   const [selectedProduct, setSelectedProduct] = useState(null); // State for the product to be deleted
+  const [showSearchInput, setShowSearchInput] = useState(false); // State for toggling search input visibility
 
   // const LocID = location.state?.;
   // console.log(LocID);
+   const LayoutandAddBtn = () => {
+        const toggel = () => {
+          setviewIcn((prevState) => !prevState);
+        };
+        return (
+          <>
+            {/* <a name="" id="" class="btn btn-primary px-4 mx-2" role="button" >
+                  Add
+                </a> */}
+            <div onClick={toggel} >
+              {viewIcn ? <MdGridView /> :  <Tooltip title="Change to Grid View">  <GridViewIcon sx={{ color:"grey" ,marginRight:"10px"}} /> </Tooltip>  }
+            </div>
+          </>
+        );
+      };
+  const getAllProducts = async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const token = localStorage.getItem("tokken");
+
+    const raw = JSON.stringify({
+      tokenData: token,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    
+
+
+    try {
+      const LocID = localStorage.getItem("LocID");
+      const response = await fetch(
+        `${base_url}/ProductByCategoryAndLocation?MainID=0&LocID=${LocID}&Status=0`,
+        requestOptions
+      );
+      const result = await response.json();
+      if (result.status === false || !result.data) {
+        // Handle the case where no data is found
+        // console.log(result.error); // "No Data Found" message
+        setProducts([]); // Set an empty array for no products
+      } else {
+        // Filter out deactivated products
+        const activeProducts = result.data.filter(
+          (product) => !product.ProdIsDeactive
+        );
+        setProducts(activeProducts);
+      } // Set the data once the API call is successful
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false); // Set loading to false when done
+    }
+  };
 
   useEffect(() => {
-    const getAllProducts = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      const token = localStorage.getItem("tokken");
-
-      const raw = JSON.stringify({
-        tokenData: token,
-      });
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      try {
-        const LocID = localStorage.getItem("LocID");
-        // console.log(LocID);
-
-        const response = await fetch(
-          `${base_url}/ProductByCategoryAndLocationWithoutImage?MainID=0&LocID=${LocID}&Status=0`,
-            requestOptions
-        );
-        const result = await response.json();
-        if (result.status === false || !result.data) {
-          // Handle the case where no data is found
-          // console.log(result.error); // "No Data Found" message
-          setProducts([]); // Set an empty array for no products
-        } else {
-          // Filter out deactivated products
-          const activeProducts = result.data.filter(
-            (product) => !product.ProdIsDeactive
-          );
-          setProducts(activeProducts);
-        } // Set the data once the API call is successful
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false); // Set loading to false when done
-      }
-    };
-
     getAllProducts();
   }, []); // Empty dependency array, runs once when the component mounts
 
@@ -118,7 +145,7 @@ const AllProductList = ({ heading }) => {
       };
 
       const raw = JSON.stringify({
-        tokenData:token,
+        tokenData: token,
         Prod: productData,
       });
 
@@ -147,12 +174,11 @@ const AllProductList = ({ heading }) => {
         } else {
           // Handle failure case (e.g., show an error message)
           toast.error("Couldn't Delete The Product", {
-                      autoClose: 1000,
-                    })
-          
+            autoClose: 1000,
+          });
         }
       } catch (error) {
-        console.error("Error deleting product: ", error);
+        console.error("Error deleting product ", error);
       } finally {
         setOpenDialog(false); // Close the dialog after the action
         setLoading(false); // End loading after the action is completed
@@ -200,8 +226,7 @@ const AllProductList = ({ heading }) => {
         },
         {
           header: "Remove", // Custom column for the icon
-          id: "actions",
-          accessorKey: "actions", // Doesn't need to map to any data field
+          
           Cell: ({ row }) => (
             <div
               onClick={() => {
@@ -235,48 +260,115 @@ const AllProductList = ({ heading }) => {
       enableStickyFooter: true,
       enableStickyHeader: true,
       enableColumnResizing: true,
+      enableBottomToolbar: false,
+      enablePagination: false,
+      enableTopToolbar:false,
       layoutMode: "grid",
-      initialState: { density: "compact" }, // Data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-
-      renderTopToolbarCustomActions: ({ table }) => {
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              padding: "8px",
-              flexWrap: "wrap",
-            }}
-          >
-            <Button
-              // export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
-              onClick={handleExportData}
-              startIcon={<MdDownload />}
-            >
-              Export All Data
-            </Button>
-          </Box>
-        );
+      initialState: { density: "compact",showGlobalFilter:true }, // Data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+      muiTableHeadCellProps: {
+        sx: {
+          bgcolor: "#a5d8dd", // Primary color
+          color: "black", // Text color for header
+          fontWeight: "bold", // Optional: bold header text
+        },
       },
+
+    
     });
 
     return (
-      <MaterialReactTable
-        table={table}
-        renderColumnHeader={(column) => {
-          return (
-            <div
-              style={{
-                backgroundColor: "#4caf50", // Change to your desired color
-                color: "white",
-                padding: "10px",
-              }}
-              {...column.getHeaderProps()}
-            >
-              {column.renderHeader()}
-            </div>
-          );
-        }}
-      />
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            backgroundColor: "inherit",
+            borderRadius: "4px",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            "@media max-width: 768px": {
+              flexDirection: "column",
+            },
+          }}
+        >
+          <Box>
+          <div className="heading h4">
+          <div className="d-inline p-0 mx-2">
+            <BackButton />
+          </div>
+          {type.charAt(0).toUpperCase() + type.slice(1) + " Products List"}
+        </div>
+            {/* <SubHeaderForLocations
+              Name={
+                type.charAt(0).toUpperCase() + type.slice(1) + " Products List"
+              }
+              setviewIcn={setviewIcn}
+              viewIcn={viewIcn}
+              hidebtn={false}
+            /> */}
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  overflow: "hidden",
+                  width: showSearchInput ? "250px" : "0px",
+                  opacity: showSearchInput ? 1 : 0,
+                  transition: "width 0.3s ease, opacity 0.3s ease",
+                }}
+              >
+                {showSearchInput && (
+                  <MRT_GlobalFilterTextField table={table} autoFocus={true} />
+                )}
+              </Box>
+
+              <Tooltip title="Search">
+                <IconButton
+                  onClick={() => setShowSearchInput(!showSearchInput)}
+                >
+                  <BiSearch />
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <MRT_ToggleFiltersButton table={table} />
+            <MRT_ShowHideColumnsButton table={table} />
+            <MRT_ToggleDensePaddingButton table={table} />
+            {/* <MRT_ToggleFullScreenButton table={table} /> */}
+            <Box> <LayoutandAddBtn/></Box>
+            <Box>
+              <Button
+                color="primary"
+                onClick={handleExportData}
+                variant="contained"
+                size="small"
+                >
+                  <div className="pe-1">
+
+                <MdDownload/>
+                  </div>
+              
+                Export
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+        <MaterialReactTable
+          table={table}
+          renderColumnHeader={(column) => {
+            return (
+              <div
+                style={{
+                  backgroundColor: "#4caf50", // Change to your desired color
+                  color: "white",
+                  padding: "10px",
+                }}
+                {...column.getHeaderProps()}
+              >
+                {column.renderHeader()}
+              </div>
+            );
+          }}
+        />
+      </Box>
     );
   };
 
@@ -342,22 +434,21 @@ const AllProductList = ({ heading }) => {
 
   return (
     <>
-      <ToastContainer/>
-      <SubHeaderForLocations
-        Name={type.charAt(0).toUpperCase() + type.slice(1) + " Products List"}
-        setviewIcn={setviewIcn}
-        viewIcn={viewIcn}
-        hidebtn={false}
-      />
+      <ToastContainer />
+
       {products && viewIcn ? (
-        <CardProducts products={products} />
+        <CardProducts
+          products={products}
+          Name={type.charAt(0).toUpperCase() + type.slice(1) + " Products List"}
+          setviewIcn={setviewIcn}
+          viewIcn={viewIcn}
+        />
       ) : (
         // <AllProductsTable products={products} />
         <ProductTable products={products} />
       )}
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
           <p>Are you sure you want to delete this item?</p>
         </DialogContent>

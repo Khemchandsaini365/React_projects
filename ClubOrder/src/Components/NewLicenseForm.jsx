@@ -146,7 +146,7 @@ const NewLicenseForm = ({ heading, btn }) => {
     const raw = JSON.stringify({
       tokenData:adminTokken,
       License: {
-        LiceNo: "1",
+        // LiceNo: "1",
         LiceDeviceID: license.LiceDeviceID,
         LiceCompanyID: license.LiceCompanyID,
         LiceCompanyName: license.LiceCompanyName,
@@ -172,22 +172,32 @@ const NewLicenseForm = ({ heading, btn }) => {
     fetch(`${base_url}/Admin_InsertLicense`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result);
         if (result.status === true) {
           navigate("/license");
+        }else if(result.error=== "Limit is over "){
+          toast.error("License "+result.error, {
+            autoClose: 1000,
+          })
         }else{
-          toast.error("Error in Creating Licnese", {
+          toast.error("Please Fill required fileds", {
             autoClose: 1000,
           })
         }
       })
-      .catch((error) => {console.error("Error creating license", error)
+      .catch((error) => {
+        toast.error("Error creating license", {
+          autoClose: 1000,
+        })
+        console.error("Error creating license", error)
         
       });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(license.LiceCompanyName==""){
+      return toast.error("Select Company")
+    }
     await newLicense();
    
   };
@@ -197,7 +207,7 @@ const NewLicenseForm = ({ heading, btn }) => {
     
     <ToastContainer/>
     <div className="container mt-3">
-      <h2 className="text-center">{heading}</h2>
+      <h2 className="text-center">Create {heading}</h2>
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div
@@ -283,7 +293,7 @@ const NewLicenseForm = ({ heading, btn }) => {
             className="col-sm-4"
             style={{ paddingLeft: "10%", fontWeight: 500 }}
           >
-            <label className="control-label">Set Expiry Date</label>
+            <label className="control-label">Expiry Date</label>
           </div>
           <div className="col-sm-8">
           <Box display="flex" flexWrap="wrap">

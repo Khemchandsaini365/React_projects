@@ -6,7 +6,7 @@ import Example from "./Licensehistory";
 import { CgClose } from "react-icons/cg";
 import { toast, ToastContainer } from "react-toastify";
 
-const LicenseForm = ({ heading, btn }) => {
+const LicenseWithSurrender = ({ heading, btn }) => {
   const { state } = useLocation();
   const { liceID } = useParams();
   const navigate = useNavigate();
@@ -56,9 +56,8 @@ const LicenseForm = ({ heading, btn }) => {
       LiceExpiryDate: selectedDateValue + "T00:00:00"
     }));
     }
-
-    // Set the selected date state and update the license expiration date
     
+    // Set the selected date state and update the license expiration date
     // console.log("Selected Date:", selectedDateValue);
     // console.log("Formatted Current Date:", formattedCurrentDate);
 
@@ -380,7 +379,7 @@ const LicenseForm = ({ heading, btn }) => {
           </div>
         </div>
 
-        {/* <div className="row mb-3">
+        <div className="row mb-3">
           <div className="col-sm-4">
             <label className="control-label h6">
               
@@ -393,7 +392,7 @@ const LicenseForm = ({ heading, btn }) => {
       label={ <Typography sx={{color:"red",fontWeight:"600"}}>Surrender License</Typography>} // Change label based on the state
     />
           </div>
-        </div> */}
+        </div>
 
         <div className="text-center mb-3">
           <button
@@ -409,4 +408,4 @@ const LicenseForm = ({ heading, btn }) => {
   );
 };
 
-export default LicenseForm;
+export default LicenseWithSurrender;

@@ -37,7 +37,7 @@ const AddNewClient = ({ heading, btn }) => {
   const SearchableDropdown = ({ options, placeholder }) => {
     // State to store the filtered list of options
     const [filteredOptions, setFilteredOptions] = useState(options);
-    console.log(options);
+
 
     // State to control the input field's value
     const [inputValue, setInputValue] = useState("");

@@ -5,7 +5,7 @@ import { BiEdit } from "react-icons/bi";
 import SubHeader from "./SubHeader";
 import { useNavigate } from "react-router-dom";
 import { base_url } from "../env";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { getTokenFromLocalStorage } from "../Secure";
 import BackButton from "./BackButton";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,6 +18,7 @@ const Companies = () => {
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const fetchCompanies = async () => {
       const myHeaders = new Headers();
@@ -54,15 +55,13 @@ const Companies = () => {
         }
         setloader(false);
       } catch (error) {
-        
         setloader(false);
-      console.error("Error fetching companies:", error);
-      toast.error("An error occurred while fetching companies.", {
-        autoClose: 3000,
-      });
+        console.error("Error fetching companies:", error);
       }
     };
+    // CheckUpdates();
     fetchCompanies();
+
   }, []); // Empty dependency array means this runs only once when the component mounts
 
   const handleClick = (compID) => {
@@ -96,14 +95,14 @@ const Companies = () => {
       );
       setFilteredCompanies(filtered);
     }
-  }, [searchTerm, companies]); // Re-run filtering when searchTerm or companies change
+  }, [searchTerm, companies]);  // Re-run filtering when searchTerm or companies change
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       {/* <SubHeader Name={"Companies"} newcompany={"newcompany"} /> */}
-      <div className="container-fluid p-0 bg-light mt-2 d-flex justify-content-between">
-        <div className="heading h4">
+      <div className="container-fluid p-0 bg-light mt-2 d-flex justify-content-between align-items-center">
+        <div className="heading h4 d-flex justify-content-between align-items-center">
           <div className="d-inline p-0 mx-2">
             <BackButton />
           </div>
@@ -127,15 +126,14 @@ const Companies = () => {
           </form>
         </div>
         <div className="heading">
-          <a
-            name=""
-            id=""
-            class="btn btn-primary px-4 btn-sm"
-            role="button"
-            onClick={handleEdit}
-          >
-            Add
-          </a>
+        <Button
+                color="primary"
+                onClick={handleEdit}
+                variant="contained"
+                size="small"
+              >
+                ADD
+                </Button>
         </div>
       </div>
 
@@ -167,12 +165,13 @@ const Companies = () => {
                     boxShadow: `rgba(149, 157, 165, 0.2) 0px 8px 24px`,
                   }}
                 >
+                  <div style={{ maxWidth: "150px",  width:"100%", height:"100%", maxHeight:"62%"}}  className="img-container m-2 border border-dark d-flex  justify-content-center align-items-center">
                   <img
-                    src={clublogo}
-                    className="m-2 border border-dark"
-                    style={{ maxWidth: "150px" }}
+                    src={company?.CompImages[0]?.ImageName  || clublogo}
+                    style={{width:"100%", height:"auto", maxHeight:"100%", }}
                     alt="Club Logo"
                   />
+                  </div>
                   <div
                     className="icon"
                     style={{ fontSize: "18px" }}
@@ -203,4 +202,3 @@ const Companies = () => {
 };
 
 export default Companies;
-

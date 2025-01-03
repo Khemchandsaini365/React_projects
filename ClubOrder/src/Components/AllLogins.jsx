@@ -1,43 +1,33 @@
 import React, { useEffect, useState } from "react";
 import BackButton from "./BackButton";
 import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  Paper,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from "@mui/material";
+import { Box, CircularProgress, IconButton, Tooltip ,Button} from "@mui/material";
 import { base_url } from "../env";
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiSearch } from "react-icons/bi";
 import { useMemo } from "react";
 import {
   MaterialReactTable,
+  MRT_GlobalFilterTextField,
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
   useMaterialReactTable,
 } from "material-react-table";
-import { IconButton } from "rsuite";
+import { toast, ToastContainer } from "react-toastify";
 
 const Allclients = () => {
-  const [searchTerm, setSearchTerm] = useState();
   const [allClients, setAllclients] = useState([]);
   const [loader, setLoader] = useState(true);
   const naviagte = useNavigate();
-
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  const [showSearchInput, setShowSearchInput] = useState(false); // State for toggling search input visibility
+  
   const handleEdit = (row) => {
-    // console.log(row);
-
     const id = row.original.LoginID;
-
-    const data={
-      compName:row.original.CompName
-    }
-    naviagte(`/editClientLogin/${id}`, { state: data,});
+    const data = {
+      compName: row.original.CompName,
+    };
+    naviagte(`/editClientLogin/${id}`, { state: data });
   };
 
   const addNewClient = () => {
@@ -47,10 +37,10 @@ const Allclients = () => {
   const getAllClientsLogins = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    const adminTokken=localStorage.getItem("userToken")
+    const adminTokken = localStorage.getItem("userToken");
 
     const raw = JSON.stringify({
-      tokenData:adminTokken,
+      tokenData: adminTokken,
     });
 
     const requestOptions = {
@@ -67,7 +57,13 @@ const Allclients = () => {
         setLoader(false);
         // console.log(result.data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        toast.error(error, {
+          autoClose: 1000,
+        });
+        setLoader(false);
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -101,11 +97,25 @@ const Allclients = () => {
           header: "CompName",
           size: 150,
         },
+        {
+          accessorKey: "IsDeActive",
+          header: "Status",
+          filterVariant: 'checkbox',
+          Cell: ({ row }) => {
+            return row?.original?.IsDeActive ? (
+              <div className="btn btn-danger btn-sm m-0 p-0 px-1">
+                De-Active
+              </div>
+            ) : (
+              <div className="btn btn-success btn-sm m-0 p-0 px-1">Active</div>
+            );
+          },
+          size: 150,
+        },
 
         {
           header: "Actions", // Custom column for the icon
-          id: "actions",
-          accessorKey: "actions", // Doesn't need to map to any data field
+      // Doesn't need to map to any data field
           Cell: ({ row }) => (
             <div onClick={() => handleEdit(row)} style={{ fontSize: "15px" }}>
               <BiEdit /> {/* Replace with your custom icon */}
@@ -121,15 +131,92 @@ const Allclients = () => {
       columns,
       data,
       enableStickyHeader: true,
-
+      enableBottomToolbar: false,
+      enablePagination: false,
       enableRowNumbers: true, // Data must be memoized or stable
+      enableTopToolbar:false,
+      initialState: { density: "compact" ,showGlobalFilter:true},
+      muiTableHeadCellProps: {
+        sx: {
+          bgcolor: "#a5d8dd", // Primary color
+          color: "black", // Text color for header
+          fontWeight: "bold", // Optional: bold header text
+        },
+      },
+
+    
     });
 
-    return <MaterialReactTable table={table} />;
+    return (
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            backgroundColor: "inherit",
+            borderRadius: "4px",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            "@media max-width: 768px": {
+              flexDirection: "column",
+            },
+          }}
+        >
+          <Box>
+            <div className="heading h4 d-flex align-items-center">
+              <div className="d-inline p-0 mx-2 ">
+                <BackButton />
+              </div>
+              All Clients
+            </div>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  overflow: "hidden",
+                  width: showSearchInput ? "250px" : "0px",
+                  opacity: showSearchInput ? 1 : 0,
+                  transition: "width 0.3s ease, opacity 0.3s ease",
+                }}
+              >
+                {showSearchInput && (
+                  <MRT_GlobalFilterTextField table={table} autoFocus={true} />
+                )}
+              </Box>
+
+              <Tooltip title="Search">
+                <IconButton
+                  onClick={() => setShowSearchInput(!showSearchInput)}
+                >
+                  <BiSearch />
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <MRT_ToggleFiltersButton table={table} />
+            <MRT_ShowHideColumnsButton table={table} />
+            <MRT_ToggleDensePaddingButton table={table} />
+            {/* <MRT_ToggleFullScreenButton table={table} /> */}
+            <Box>
+              <Button
+                color="primary"
+                onClick={addNewClient}
+                variant="contained"
+                size="small"
+              >
+                Add
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+
+        <MaterialReactTable table={table} />
+      </Box>
+    );
   };
 
   return (
     <>
+      <ToastContainer />
       {loader ? (
         <div
           className="d-flex justify-content-center align-items-center"
@@ -139,27 +226,6 @@ const Allclients = () => {
         </div>
       ) : (
         <>
-          <div className="container-fluid p-0 bg-light my-2 d-flex justify-content-between">
-            <div className="heading h4">
-              <div className="d-inline p-0 mx-2">
-                <BackButton />
-              </div>
-              All Clients
-            </div>
-
-            <div className="heading">
-              <a
-                name=""
-                id=""
-                class="btn btn-primary px-4"
-                role="button"
-                onClick={addNewClient}
-              >
-                Add
-              </a>
-            </div>
-          </div>
-
           {/* Table */}
           <div className="h-50">
             <Tabel />

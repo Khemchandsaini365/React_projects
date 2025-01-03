@@ -3,25 +3,30 @@ import { useParams } from "react-router-dom";
 import SubHeaderForLocations from "./SubHeaderForLocations";
 import { BiEdit } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import AllProductsTable from "./AllProductsTable";
+// import AllProductsTable from "./AllProductsTable";
 import { base_url } from "../env";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, createTheme, TextField, ThemeProvider } from "@mui/material";
 import { useContext, useMemo } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 import { toast, ToastContainer } from "react-toastify";
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker } from "antd";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AllOrdersList = ({ heading }) => {
   const { type } = useParams();
   const decodedType = decodeURIComponent(type);
-  const [orders, setOrders] = useState(null); // Initial state is null
+  const [orders, setOrders] = useState([]); // Initial state is null
   const [loading, setLoading] = useState(true); // Loading state is true initially
   const [error, setError] = useState(null); // State for error message
   const OrdersData = createContext();
   const [savedType, setSavedType] = useState(decodedType); // Save it in state
   // console.log(decodedType);
+  const Theme = { primaryThemeColor: "#1976d2" };
 
   useEffect(() => {
     if (savedType !== type) {
@@ -45,7 +50,7 @@ const AllOrdersList = ({ heading }) => {
         body: raw,
         redirect: "follow",
       };
-      // console.log(decodedType);
+
 
       fetch(
         `${base_url}/OrdersByLocationList/?Location=${type}`,
@@ -56,7 +61,6 @@ const AllOrdersList = ({ heading }) => {
           if (result.status === false || result.error === "No Data Found") {
             setError("No data available for this location."); // Set error message if no data is found
             setLoading(false);
-            toast.error("Couldn't fetch Orders Data",{autoClose:3000})
             setOrders([]); // Ensure no data is displayed
           } else {
             setOrders(result.data);
@@ -74,44 +78,151 @@ const AllOrdersList = ({ heading }) => {
   }, [type]); // Re-run effect when the location type changes
 
   const data = orders;
-
-  const handleEdit = ({ row }) => {
-    const data = row;
-    // console.log(data);
-  };
-
   const Allorderstable = ({ orders }) => {
     // Memoized columns
     const columns = useMemo(
       () => [
         {
-          accessorKey: "OrdID", // Access nested data with dot notation
-          header: "Sr. NO.",
-        },
-        {
           accessorKey: "OrdNo",
           header: "OrdNo",
+          size:50
         },
         {
-          accessorFn: (row) =>
-            row.Details?.[0]?.OrdDtl_ProdName || "No Product",
+                  accessorFn: (date) => date?.OrdDate,
+                  Cell: ({ cell }) => dayjs(cell.getValue()).format("DD/MM/YYYY"),
+                  header: "Ord Date",
+                  filterFn: (row, columnId, filterValue) => {
+                    const { startDate, endDate } = filterValue;
+                    const date = dayjs(row.getValue(columnId));
+                    if (startDate && endDate) {
+                      return date.isBetween(startDate, endDate, "day", "[]");
+                    }
+                    return true;
+                  },
+                  Filter: ({ column, table }) => {
+                    const handleFilterChange = (startDate, endDate) => {
+                      table.setColumnFilters([
+                        {
+                          id: column.id,
+                          value: {
+                            startDate: startDate
+                              ? dayjs(startDate, "DD-MM-YYYY")
+                              : null,
+                            endDate: endDate ? dayjs(endDate, "DD-MM-YYYY") : null,
+                          },
+                        },
+                      ]);
+                    };
+                    return (
+                      <ThemeProvider
+                        theme={createTheme({
+                          palette: { primary: { main: Theme.primaryThemeColor } },
+                        })}
+                      >
+                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                          <div style={{ display: "flex", gap: "1rem"}} >
+                            <DatePicker
+                              style={{minWidth:"115px"}}
+                              value={column.getFilterValue()?.startDate}
+                              format="DD-MM-YYYY"
+                              onChange={(newValue) =>
+                                handleFilterChange(
+                                  newValue?.format("DD-MM-YYYY"),
+                                  column.getFilterValue()?.endDate
+                                )
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  value={
+                                    column.getFilterValue()?.startDate
+                                      ? dayjs(
+                                          column.getFilterValue()?.startDate
+                                        ).format("DD-MM-YYYY")
+                                      : ""
+                                  }
+                                />
+                              )}
+                            />
+                            <DatePicker
+                              value={column.getFilterValue()?.endDate}
+                              style={{minWidth:"115px"}}
+                              format="DD-MM-YYYY"
+                              onChange={(newValue) =>
+                                handleFilterChange(
+                                  column.getFilterValue()?.startDate,
+                                  newValue?.format("DD-MM-YYYY")
+                                )
+                              }
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  value={
+                                    column.getFilterValue()?.endDate
+                                      ? dayjs(column.getFilterValue()?.endDate).format(
+                                          "DD-MM/YYYY"
+                                        )
+                                      : ""
+                                  }
+                                />
+                              )}
+                            />
+                          </div>
+                        </LocalizationProvider>
+                      </ThemeProvider>
+                    );
+                  },
+                },
+        
+        {
+          accessorFn: (row) => {return row.Details?.map((order) => order.OrdDtl_ProdName).join(" | ") || " "},
+          Cell: ({ row }) => {
+            const OrderProduct =
+              row.original.Details?.map((order) => order.OrdDtl_ProdName).join("<br /> ") ||
+              "";
+            return <span dangerouslySetInnerHTML={{__html:OrderProduct}} /> 
+          },
           header: "Product",
+          filterMethod: (rows, columnId, filterValue) => {
+            return rows.filter((row) => {
+              // Check if any product name in the Details array matches the filter value
+              const products = row.values[columnId].toLowerCase();
+              return products.includes(filterValue.toLowerCase()); // Case insensitive match
+            });
+          }
         },
         {
-          accessorFn: (row) => row.Details?.[0]?.OrdDtl_Qty || 0,
+          accessorFn: (row) => (row.Details?.map((order)=> order.OrdDtl_Qty) || 0),
+          Cell: ({ row }) => {
+            const OrderProductQty =
+              row.original.Details?.map((order) => order.OrdDtl_Qty).join("<br />  ") ||
+              " ";
+            return <span dangerouslySetInnerHTML={{__html:OrderProductQty}} />
+          },
+          filterMethod: (rows, columnId, filterValue) => {
+            return rows.filter((row) => {
+              // Check if any product name in the Details array matches the filter value
+              const products = row.values[columnId].toLowerCase();
+              return products.includes(filterValue.toLowerCase()); // Case insensitive match
+            });
+          },
           header: "Quantity",
+           size:50
         },
         {
           accessorKey: "OrdMemberName", // Normal accessorKey
           header: "OrdMemberName",
+           size:100
         },
         {
           accessorKey: "OrdTableNo",
           header: "OrdTableNo",
+           size:65
         },
         {
           accessorKey: "OrdLocName",
           header: "OrdLocationName",
+          size:100
         },
       ],
       []
@@ -120,7 +231,31 @@ const AllOrdersList = ({ heading }) => {
     const table = useMaterialReactTable({
       columns,
       data,
-      initialState: { density: "compact" }, // Data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+      initialState:{density:"compact"},
+      layoutMode: "grid",
+      muiTableHeadCellProps: {
+        sx: {
+          bgcolor: '#a5d8dd', // Primary color
+          color: 'black', // Text color for header
+          fontWeight: 'bold', // Optional: bold header text
+        }
+      },
+      enableRowNumbers:true,
+      enableColumnResizing:true,
+      enableBottomToolbar:false,
+      enableFullScreenToggle:false,
+      enablePagination:false,
+      enableStickyHeader:true,
+      renderTopToolbarCustomActions: ({ table }) => {
+        return (
+          <>
+            <SubHeaderForLocations
+          Name={type.charAt(0).toUpperCase() + type.slice(1) + " Orders List"}
+          hidebtn={true}
+        />
+          </>
+        );
+      },
     });
 
     return <MaterialReactTable table={table} />;
@@ -147,16 +282,7 @@ const AllOrdersList = ({ heading }) => {
   if (error) {
     return (
       <>
-        
-      <ToastContainer/>
-        <SubHeaderForLocations
-          Name={type.charAt(0).toUpperCase() + type.slice(1) + " Orders List"}
-          hidebtn={true}
-        />
-
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <h2>{error}</h2>
-        </div>
+      <Allorderstable  orders={orders}/>
       </>
     );
   }
@@ -164,10 +290,6 @@ const AllOrdersList = ({ heading }) => {
   return (
     <>
       <ToastContainer/>
-      <SubHeaderForLocations
-        Name={type.charAt(0).toUpperCase() + type.slice(1) + " Orders List"}
-        hidebtn={true}
-      />
       {orders && <Allorderstable orders={orders} />}
     </>
   );

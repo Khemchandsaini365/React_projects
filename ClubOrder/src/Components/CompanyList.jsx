@@ -26,8 +26,6 @@ const FetchCompanies = async () => {
       requestOptions
     );
     const result = await response.json(); // Parse response as JSON
-    console.log(result); // You can log it for debugging
-
     // Assuming the result is an array of companies
     if (result.status) {
       dispatch(setCompanies(result.data)); // Set the companies state with the fetched data
